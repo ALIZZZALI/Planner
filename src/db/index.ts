@@ -3,22 +3,30 @@ import { Pool } from "pg";
 
 const databaseUrl = process.env.DATABASE_URL;
 
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is required");
-}
-
 const globalForDb = globalThis as typeof globalThis & {
   __arenaNextJsPostgresqlPool?: Pool;
 };
 
+// The planner is local-first (IndexedDB), so DATABASE_URL is optional.
+// When it is not configured (for example on Vercel), keep DB initialization
+// from failing at module-load/build time. The health endpoint already treats
+// the database as an optional diagnostic and will report it as unavailable.
 export const pool =
-  globalForDb.__arenaNextJsPostgresqlPool ??
-  new Pool({
-    connectionString: databaseUrl,
-  });
+  databaseUrl
+    ? globalForDb.__arenaNextJsPostgresqlPool ??
+      new Pool({
+        connectionString: databaseUrl,
+      })
+    : undefined;
 
-if (process.env.NODE_ENV !== "production") {
+if (databaseUrl && process.env.NODE_ENV !== "production" && pool) {
   globalForDb.__arenaNextJsPostgresqlPool = pool;
 }
 
-export const db = drizzle(pool);
+// Keep the existing `db` export/type for consumers while allowing the
+// local-first app to build without a DATABASE_URL. Any actual DB operation
+// without a configured database will fail at use-time and can be handled by
+// the caller (such as /api/health).
+export const db = pool
+  ? drizzle(pool)
+  : (undefined as unknown as ReturnType<typeof drizzle>);
