@@ -1,0 +1,351 @@
+{
+  "version": 2,
+  "timezone": "Asia/Tehran",
+  "exportedAt": "2026-09-01T08:00:00.000Z",
+  "tasks": [
+    {
+      "id": "math-001",
+      "name": "ریاضی - ویدیوی عقب‌افتاده",
+      "date": "2026-09-03",
+      "start": "08:30",
+      "end": "09:30",
+      "repeat": {
+        "type": "daily"
+      },
+      "category": "study",
+      "icon": "calculator",
+      "color": "blue",
+      "priority": "high",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 0
+      },
+      "notes": "فصل ۳ + ۱۰ تمرین",
+      "fixedTime": false
+    },
+    {
+      "id": "physics-001",
+      "name": "فیزیک - مرور جزوه",
+      "date": "2026-09-03",
+      "start": "09:45",
+      "end": "10:45",
+      "repeat": {
+        "type": "daily"
+      },
+      "category": "study",
+      "icon": "atom",
+      "color": "violet",
+      "priority": "normal",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 5
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "chemistry-001",
+      "name": "شیمی - حل مسئله",
+      "date": "2026-09-03",
+      "endDate": "2026-12-30",
+      "start": "11:15",
+      "end": "12:15",
+      "repeat": {
+        "type": "weekdays"
+      },
+      "category": "study",
+      "icon": "flask",
+      "color": "teal",
+      "priority": "normal",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 0
+      },
+      "notes": "روزشمار کنکور",
+      "fixedTime": false
+    },
+    {
+      "id": "photoshop-class-001",
+      "name": "کلاس فتوشاپ",
+      "date": "2026-09-05",
+      "endDate": "2026-12-30",
+      "start": "16:00",
+      "end": "17:30",
+      "repeat": {
+        "type": "weekly",
+        "days": [
+          "sat",
+          "mon",
+          "wed"
+        ]
+      },
+      "category": "class",
+      "icon": "image",
+      "color": "rose",
+      "priority": "high",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 15,
+        "atEnd": false
+      },
+      "notes": "پروژه‌ی رتوش پرتره",
+      "fixedTime": true
+    },
+    {
+      "id": "photoshop-hw-001",
+      "name": "تکلیف فتوشاپ",
+      "date": "2026-09-04",
+      "start": "19:30",
+      "end": "20:30",
+      "repeat": {
+        "type": "weekly",
+        "days": [
+          "sat",
+          "sun",
+          "tue",
+          "thu"
+        ]
+      },
+      "category": "homework",
+      "icon": "pencil",
+      "color": "pink",
+      "priority": "high",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 0,
+        "atEnd": true
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "coding-001",
+      "name": "کدنویسی - پروژه شخصی",
+      "date": "2026-09-03",
+      "start": "20:30",
+      "end": "21:30",
+      "repeat": {
+        "type": "daily"
+      },
+      "category": "coding",
+      "icon": "code",
+      "color": "indigo",
+      "priority": "normal",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 5
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "esp32-001",
+      "name": "ESP32 - ساخت مدار سنسور دما",
+      "date": "2026-09-08",
+      "start": "20:30",
+      "end": "21:30",
+      "repeat": {
+        "type": "weekly",
+        "days": [
+          "tue",
+          "thu"
+        ]
+      },
+      "category": "electronics",
+      "icon": "cpu",
+      "color": "cyan",
+      "priority": "normal",
+      "reminder": {
+        "enabled": false,
+        "minutesBefore": 0
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "biology-odd",
+      "name": "زیست‌شناسی - خواندن کتاب",
+      "date": "2026-09-01",
+      "start": "14:00",
+      "end": "15:00",
+      "repeat": {
+        "type": "odd"
+      },
+      "category": "study",
+      "icon": "dna",
+      "color": "emerald",
+      "priority": "normal",
+      "reminder": {
+        "enabled": false,
+        "minutesBefore": 5
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "gaming-even",
+      "name": "وقت آزاد / بازی",
+      "date": "2026-09-02",
+      "start": "22:30",
+      "end": "23:30",
+      "repeat": {
+        "type": "even"
+      },
+      "category": "fun",
+      "icon": "gamepad",
+      "color": "orange",
+      "priority": "low",
+      "reminder": {
+        "enabled": false,
+        "minutesBefore": 0
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "workout-3days",
+      "name": "ورزش و حرکت کششی",
+      "date": "2026-09-03",
+      "start": "07:15",
+      "end": "08:00",
+      "repeat": {
+        "type": "interval",
+        "every": 3
+      },
+      "category": "health",
+      "icon": "dumbbell",
+      "color": "lime",
+      "priority": "normal",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 10
+      },
+      "notes": "",
+      "fixedTime": false
+    },
+    {
+      "id": "monthly-review",
+      "name": "جمع‌بندی ماهانه",
+      "date": "2026-09-28",
+      "start": "10:00",
+      "end": "12:00",
+      "repeat": {
+        "type": "monthly"
+      },
+      "category": "personal",
+      "icon": "target",
+      "color": "amber",
+      "priority": "high",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 30
+      },
+      "notes": "برنامه‌ی ماه بعد را بنویس",
+      "fixedTime": true
+    },
+    {
+      "id": "one-time-exam",
+      "name": "آزمون آزمایشی ریاضی",
+      "date": "2026-10-15",
+      "start": "09:00",
+      "end": "12:00",
+      "repeat": {
+        "type": "none"
+      },
+      "category": "study",
+      "icon": "graduation",
+      "color": "red",
+      "priority": "critical",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 60
+      },
+      "notes": "کار_TIMER و برگه‌ی پاسخ",
+      "fixedTime": true
+    },
+    {
+      "id": "sleep-001",
+      "name": "خواب",
+      "date": "2026-09-03",
+      "start": "00:00",
+      "end": "07:00",
+      "repeat": {
+        "type": "daily"
+      },
+      "category": "rest",
+      "icon": "moon",
+      "color": "slate",
+      "priority": "normal",
+      "reminder": {
+        "enabled": true,
+        "minutesBefore": 30
+      },
+      "notes": "۸ ساعت خواب شبانه",
+      "fixedTime": false
+    }
+  ],
+  "completions": [
+    {
+      "taskId": "math-001",
+      "date": "2026-09-03",
+      "status": "completed",
+      "completedAt": "2026-09-03T09:35:00.000Z"
+    }
+  ],
+  "habits": [
+    {
+      "id": "habit-wakeup",
+      "name": "ساعت ۸ بیدار شوم",
+      "icon": "sun",
+      "color": "amber",
+      "cadence": "daily",
+      "days": [
+        "sat",
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri"
+      ],
+      "reminderTime": "08:00"
+    },
+    {
+      "id": "habit-study",
+      "name": "۲ ساعت درس بخوانم",
+      "icon": "study",
+      "color": "blue",
+      "cadence": "weekdays",
+      "days": [
+        "sat",
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu"
+      ],
+      "reminderTime": null
+    },
+    {
+      "id": "habit-photoshop",
+      "name": "تمرین فتوشاپ",
+      "icon": "image",
+      "color": "rose",
+      "cadence": "custom",
+      "days": [
+        "sat",
+        "tue",
+        "thu"
+      ],
+      "reminderTime": null
+    }
+  ],
+  "kind": "schedule",
+  "dayOverrides": [
+    {
+      "date": "2026-09-03",
+      "offsetMinutes": 67,
+      "actualWakeUpMinutes": 547
+    }
+  ]
+}
