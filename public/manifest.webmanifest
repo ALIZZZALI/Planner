@@ -1,0 +1,51 @@
+{
+  "name": "برنامه‌ریز من — زمان‌بند شخصی",
+  "short_name": "برنامه‌ریز",
+  "description": "زمان‌بند و برنامه‌ریز شخصی دانش‌آموز با تایم‌لاین روزانه، یادآور، تکرار هوشمند و کارکرد کامل آفلاین.",
+  "lang": "fa-IR",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait-primary",
+  "background_color": "#f7f8fb",
+  "theme_color": "#2563eb",
+  "categories": [
+    "productivity",
+    "education",
+    "lifestyle"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "امروز",
+      "url": "/"
+    },
+    {
+      "name": "تقویم",
+      "url": "/calendar"
+    },
+    {
+      "name": "ورود/خروج داده",
+      "url": "/import-export"
+    }
+  ]
+}
