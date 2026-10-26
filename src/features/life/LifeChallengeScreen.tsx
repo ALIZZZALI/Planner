@@ -201,6 +201,40 @@ export function LifeChallengeScreen() {
     return () => window.clearTimeout(timer);
   }, [toast]);
 
+  useEffect(() => {
+    const checkReminders = () => {
+      if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+      const now = new Date();
+      const date = localISODate(now);
+      const time = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+      const seenKey = 'planner-life-notified-v1';
+      let seen: string[] = [];
+      try {
+        const raw = window.localStorage.getItem(seenKey);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) seen = parsed.filter((item): item is string => typeof item === 'string');
+        }
+      } catch { /* ignore damaged reminder history */ }
+      let changed = false;
+      for (const task of store.tasks) {
+        const key = date + ':' + task.id;
+        if (!task.enabled || !task.reminder || !task.time || task.time !== time || !applies(task.repeat, task.days, date) || seen.includes(key)) continue;
+        try {
+          new Notification(task.title, { body: 'زمان انجام این کار در برنامه روزانه است.' });
+          seen.push(key);
+          changed = true;
+        } catch { /* browser may deny notifications */ }
+      }
+      if (changed) {
+        try { window.localStorage.setItem(seenKey, JSON.stringify(seen.slice(-300))); } catch { /* ignore quota errors */ }
+      }
+    };
+    const timer = window.setInterval(checkReminders, 20000);
+    checkReminders();
+    return () => window.clearInterval(timer);
+  }, [store.tasks]);
+
   const dayTasks = useMemo(() => store.tasks.filter((task) => task.enabled && applies(task.repeat, task.days, selectedDate)).sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99')), [store.tasks, selectedDate]);
   const dayExercises = useMemo(() => store.exercises.filter((exercise) => exercise.enabled && exercise.days.includes(persianDayIndex(selectedDate))), [store.exercises, selectedDate]);
   const statuses = store.taskLogs[selectedDate] || {};
@@ -449,6 +483,7 @@ export function LifeChallengeScreen() {
             <div className="mt-2 flex gap-2"><ActionButton onClick={() => setZikrToTarget(counter.id, counter.target)}><Check className="h-4 w-4" /> ثبت تکمیل هدف</ActionButton><ActionButton variant="ghost" onClick={() => changeZikr(counter.id, -count)}>صفرکردن این ذکر</ActionButton></div>
           </article>;
         })}</div>
+        {store.counters.some((counter) => !counter.enabled) ? <div className="mt-5 rounded-xl border border-dashed border-line p-3"><p className="mb-2 text-xs font-semibold text-muted">ذکرشمارهای غیرفعال</p><div className="space-y-2">{store.counters.filter((counter) => !counter.enabled).map((counter) => <div key={counter.id} className="flex items-center justify-between gap-3 rounded-lg bg-surface2 px-3 py-2"><span className="text-sm">{counter.title}</span><div className="flex gap-1"><ActionButton variant="soft" onClick={() => updateStore((current) => ({ ...current, counters: current.counters.map((item) => item.id === counter.id ? { ...item, enabled: true } : item) }))}>فعال‌کردن</ActionButton><ActionButton variant="ghost" onClick={() => openCounterEditor(counter)}><Pencil className="h-3.5 w-3.5" /></ActionButton></div></div>)}</div></div> : null}
         {!store.counters.some((counter) => counter.enabled) ? <div className="py-12 text-center text-sm text-muted">ذکرشمار فعالی وجود ندارد. یک ذکر اضافه کن.</div> : null}
       </Panel>
       <Panel><h3 className="font-semibold">نکته</h3><p className="mt-1 text-sm leading-7 text-muted">شمارنده ابزار ثبت تعداد است؛ می‌توانی هدف را متناسب با برنامه روزانه خودت تنظیم کنی. متن ذکر و تعداد ثبت‌شده فقط در ذخیره‌سازی همین مرورگر نگه‌داری می‌شوند.</p></Panel>
@@ -472,7 +507,8 @@ export function LifeChallengeScreen() {
             </article>;
           })}</div></div>;
         })}</div>
-        {!store.exercises.some((exercise) => exercise.enabled) ? <div className="py-12 text-center text-sm text-muted">تمرینی ثبت نشده. حرکت دلخواهت را اضافه کن.</div> : null}
+        {store.exercises.some((exercise) => !exercise.enabled) ? <div className="mt-5 rounded-xl border border-dashed border-line p-3"><p className="mb-2 text-xs font-semibold text-muted">تمرین‌های غیرفعال</p><div className="space-y-2">{store.exercises.filter((exercise) => !exercise.enabled).map((exercise) => <div key={exercise.id} className="flex items-center justify-between gap-3 rounded-lg bg-surface2 px-3 py-2"><span className="text-sm">{exercise.title}</span><ActionButton variant="soft" onClick={() => updateStore((current) => ({ ...current, exercises: current.exercises.map((item) => item.id === exercise.id ? { ...item, enabled: true } : item) }))}>فعال‌کردن</ActionButton></div>)}</div></div> : null}
+        {!store.exercises.length ? <div className="py-12 text-center text-sm text-muted">تمرینی ثبت نشده. حرکت دلخواهت را اضافه کن.</div> : null}
       </Panel>
       <Panel><h3 className="font-semibold">ثبت مقدار واقعی</h3><p className="mt-1 text-sm leading-7 text-muted">برای شنا و درازونشست می‌توانی مقدار را چند مرحله ثبت کنی. تعداد ثبت‌شده در تاریخ انتخاب‌شده می‌ماند و با رفتن به فردا دوباره از صفر شروع می‌شود؛ سابقه روزهای قبل پاک نمی‌شود.</p></Panel>
     </div> : null}
@@ -518,6 +554,7 @@ export function LifeChallengeScreen() {
         {taskDraft.repeat === 'custom' ? <Field label="روزهای تکرار"><DayPicker selected={taskDraft.days} onChange={(days) => setTaskDraft({ ...taskDraft, days })} /></Field> : null}
         <Field label="توضیح (اختیاری)"><textarea value={taskDraft.notes} onChange={(event) => setTaskDraft({ ...taskDraft, notes: event.target.value })} rows={2} className="w-full rounded-xl border border-line bg-surface2 px-3 py-2.5 text-sm outline-none focus:border-accent" placeholder="جزئیات یا هدف این کار" /></Field>
         <label className="flex items-center justify-between gap-3 rounded-xl border border-line p-3"><span><span className="block text-sm font-medium">فعال بودن برنامه</span><span className="mt-1 block text-xs text-muted">تسک غیرفعال در فهرست روزانه ظاهر نمی‌شود.</span></span><input type="checkbox" checked={taskDraft.enabled} onChange={(event) => setTaskDraft({ ...taskDraft, enabled: event.target.checked })} className="h-4 w-4 accent-[var(--accent)]" /></label>
+        <label className="flex items-center justify-between gap-3 rounded-xl border border-line p-3"><span><span className="block text-sm font-medium">یادآور اعلان مرورگر</span><span className="mt-1 block text-xs text-muted">برای یادآوری، ساعت کار را هم انتخاب کن؛ اعلان وقتی برنامه/مرورگر فعال باشد بررسی می‌شود.</span></span><input type="checkbox" checked={taskDraft.reminder} onChange={async (event) => { const enabled = event.target.checked; if (enabled) { if (typeof Notification === 'undefined') { setToast('این مرورگر اعلان را پشتیبانی نمی‌کند.'); return; } const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission(); if (permission !== 'granted') { setToast('اجازه اعلان داده نشد.'); return; } } setTaskDraft({ ...taskDraft, reminder: enabled }); }} className="h-4 w-4 accent-[var(--accent)]" /></label>
       </form>
     </ModalFrame> : null}
 
