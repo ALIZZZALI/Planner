@@ -247,7 +247,7 @@ export function LifeChallengeScreen() {
   const exerciseProgress = percent(exerciseDone, dayExercises.length);
   const selectedDayIndex = persianDayIndex(selectedDate);
   const challengeDays = Math.max(1, Math.min(90, Math.floor((parseLocalDate(localISODate()).getTime() - parseLocalDate(store.challengeStart).getTime()) / 86400000) + 1));
-  const filteredTasks = dayTasks.filter((task) => taskFilter === 'all' || (taskFilter === 'done' ? statuses[task.id] === 'done' : !statuses[task.id]));
+  const filteredTasks = dayTasks.filter((task) => taskFilter === 'all' || (taskFilter === 'done' ? statuses[task.id] === 'done' : statuses[task.id] !== 'done'));
   const groupedTasks = useMemo(() => {
     const groups: { name: TaskCategory; tasks: LifeTask[] }[] = [];
     for (const category of CATEGORIES) {
