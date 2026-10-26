@@ -62,9 +62,6 @@ function repeatLabel(task: LifeTask): string {
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat('fa-IR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(parseLocalDate(value));
 }
-function dayNumber(value: string): string {
-  return new Intl.NumberFormat('fa-IR').format(Number(value.slice(-2)));
-}
 function percent(n: number, d: number): number {
   return d > 0 ? Math.max(0, Math.min(100, Math.round((n / d) * 100))) : 0;
 }
@@ -251,9 +248,6 @@ export function LifeChallengeScreen() {
   const selectedDayIndex = persianDayIndex(selectedDate);
   const challengeDays = Math.max(1, Math.min(90, Math.floor((parseLocalDate(localISODate()).getTime() - parseLocalDate(store.challengeStart).getTime()) / 86400000) + 1));
   const filteredTasks = dayTasks.filter((task) => taskFilter === 'all' || (taskFilter === 'done' ? statuses[task.id] === 'done' : !statuses[task.id]));
-  const doneOverall = taskDone + exerciseDone;
-  const plannedOverall = dayTasks.length + dayExercises.length;
-  const overallProgress = percent(doneOverall, plannedOverall);
   const groupedTasks = useMemo(() => {
     const groups: { name: TaskCategory; tasks: LifeTask[] }[] = [];
     for (const category of CATEGORIES) {
