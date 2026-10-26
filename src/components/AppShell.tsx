@@ -10,6 +10,7 @@ import {
   CloudOff,
   Download,
   Focus,
+  HeartPulse,
   Flower2,
   Gift,
   LineChart,
@@ -42,6 +43,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/', label: 'امروز', icon: <TodayIcon className="h-[1.05rem] w-[1.05rem]" />, mobile: true },
+  { href: '/life', label: 'چالش زندگی', icon: <HeartPulse className="h-[1.05rem] w-[1.05rem]" />, mobile: true },
   { href: '/schedule', label: 'برنامه', icon: <CalendarDays className="h-[1.05rem] w-[1.05rem]" />, mobile: true },
   { href: '/progress', label: 'پیشرفت', icon: <LineChart className="h-[1.05rem] w-[1.05rem]" />, mobile: true },
   { href: '/tasks', label: 'تسک‌ها', icon: <ListTodo className="h-[1.05rem] w-[1.05rem]" />, mobile: true },
