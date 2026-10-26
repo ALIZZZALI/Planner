@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode, type InputHTMLAttributes, type SelectHTMLAttributes } from 'react';
 import {
-  Activity, ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Bike, BookOpen, CalendarDays,
-  Check, CheckCircle2, ChevronDown, Circle, Clock3, Download, Dumbbell, Flame,
-  HeartPulse, Minus, Moon, MoreHorizontal, Pencil, Plus, RotateCcw, Save, Settings2,
-  ShieldCheck, Sparkles, Sun, Trash2, Upload, X, Zap
+  Activity, ArrowLeft, ArrowRight, Bike, BookOpen, CalendarDays,
+  Check, CheckCircle2, Circle, Clock3, Download, Dumbbell, HeartPulse,
+  Minus, Pencil, Plus, RotateCcw, Save, Settings2, ShieldCheck, Sparkles,
+  Trash2, Upload, X
 } from 'lucide-react';
 
 type RepeatMode = 'daily' | 'weekdays' | 'friday' | 'custom';
@@ -133,10 +133,10 @@ function ActionButton({ children, onClick, variant = 'primary', title, disabled 
         : 'text-muted hover:bg-surface2';
   return <button type="button" title={title} disabled={disabled} onClick={onClick} className={'inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-40 ' + styles}>{children}</button>;
 }
-function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
+function TextInput(props: InputHTMLAttributes<HTMLInputElement>) {
   return <input {...props} className={'w-full rounded-xl border border-line bg-surface2 px-3 py-2.5 text-sm text-fg outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/15 ' + (props.className || '')} />;
 }
-function SelectInput(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
+function SelectInput(props: SelectHTMLAttributes<HTMLSelectElement>) {
   return <select {...props} className={'w-full rounded-xl border border-line bg-surface2 px-3 py-2.5 text-sm text-fg outline-none focus:border-accent ' + (props.className || '')} />;
 }
 function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
@@ -217,7 +217,6 @@ export function LifeChallengeScreen() {
   const selectedDayIndex = persianDayIndex(selectedDate);
   const challengeDays = Math.max(1, Math.min(90, Math.floor((parseLocalDate(localISODate()).getTime() - parseLocalDate(store.challengeStart).getTime()) / 86400000) + 1));
   const filteredTasks = dayTasks.filter((task) => taskFilter === 'all' || (taskFilter === 'done' ? statuses[task.id] === 'done' : !statuses[task.id]));
-  const taskIsDone = (id: string) => statuses[id] === 'done';
   const doneOverall = taskDone + exerciseDone;
   const plannedOverall = dayTasks.length + dayExercises.length;
   const overallProgress = percent(doneOverall, plannedOverall);
